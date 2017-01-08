@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Administrator on 2016/12/29.
+ * Created by Administrator on 2017/1/7.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface CascadeSave {
+public @interface DBCascade {
 }

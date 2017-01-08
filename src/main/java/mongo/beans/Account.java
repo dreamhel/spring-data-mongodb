@@ -1,8 +1,9 @@
 package mongo.beans;
 
-import mongo.events.CascadeSave;
+import mongo.events.DBCascade;
 import mongo.events.RefrencesHolder;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Reference;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,39 +14,38 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/1/4.
  */
 @Document
-public class Account implements DBReference {
+public class Account  implements Reference {
     @Id
     private String bank;
 
-    @RefrencesHolder
-    @CascadeSave
+
+    @Override
+    public Class<? extends Annotation> annotationType() {
+        return Account.class;
+    }
+    @DBCascade
     @DBRef
-    private ArrayList<DBReference> references;
-    public void addRefrence(DBReference dbReference)
+    private ArrayList<Reference> references;
+    public void addRefrence(Reference reference)
     {
         if(references == null)
         {
             references = new ArrayList<>();
         }
-        references.add(dbReference);
+        references.add(reference);
     }
 
-    public ArrayList<DBReference> getReferences() {
+    public ArrayList<Reference> getReferences() {
         return references;
     }
 
-    public void setReferences(ArrayList<DBReference> references) {
+    public void setReferences(ArrayList<Reference> references) {
         this.references = references;
     }
 
     public Account() {
     }
 
-    @Override
-    public Class<? extends Annotation> annotationType() {
-        System.out.print("Acc");
-        return Account.class;
-    }
 
     private int number;
 
@@ -53,6 +53,8 @@ public class Account implements DBReference {
         this.bank = bank;
         this.number = number;
     }
+
+
 
     public String getBank() {
         return bank;

@@ -1,7 +1,7 @@
 package mongo.beans;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Reference;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.lang.annotation.Annotation;
@@ -10,14 +10,13 @@ import java.lang.annotation.Annotation;
  * Created by Administrator on 2017/1/4.
  */
 @Document
-public class Address implements DBReference {
+public class Address implements Reference {
     @Id
     private String address;
     private int number;
 
     @Override
     public Class<? extends Annotation> annotationType() {
-        System.out.print("Bcc");
         return Address.class;
     }
 

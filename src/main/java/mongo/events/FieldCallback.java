@@ -1,7 +1,6 @@
 package mongo.events;
 
-import mongo.beans.DBReference;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.AnnotatedType;
@@ -16,7 +15,7 @@ public class FieldCallback  implements ReflectionUtils.FieldCallback {
     public void doWith(Field field) throws IllegalArgumentException, IllegalAccessException {
         ReflectionUtils.makeAccessible(field);
         AnnotatedType t = field.getAnnotatedType();        ;
-        if (field.isAnnotationPresent(DBReference.class)) {
+        if (field.isAnnotationPresent(DBRef.class)) {
             idFound = true;
         }
     }
