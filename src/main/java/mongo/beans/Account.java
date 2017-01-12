@@ -23,7 +23,7 @@ public class Account  implements Reference {
     public Class<? extends Annotation> annotationType() {
         return Account.class;
     }
-    @DBCascade
+
     @DBRef
     private ArrayList<Reference> references;
     public void addRefrence(Reference reference)

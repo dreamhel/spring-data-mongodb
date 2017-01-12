@@ -3,9 +3,7 @@ package mongo.events;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
-import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
-import org.springframework.data.mongodb.core.mapping.event.BeforeSaveEvent;
+import org.springframework.data.mongodb.core.mapping.event.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
@@ -28,8 +26,21 @@ public class CascadeSaveMongoEventListener  extends AbstractMongoEventListener<O
         context.addApplicationListener(this);
     }
 
+
+
     @Override
     public void onBeforeConvert(BeforeConvertEvent<Object> event) {
-        ReflectionUtils.doWithFields(event.getSource().getClass(), new CascadeCallback(event.getSource(), mongoTemplate));
+        ReflectionUtils.doWithFields(event.getSource().getClass(), new CascadeSaveCallback(event.getSource(), mongoTemplate));
+            }
+
+    @Override
+    public void onBeforeDelete(BeforeDeleteEvent<Object> event) {
+           //  ReflectionUtils.doWithFields(event.getType(), new CascadeDeleteCallBack(event.getSource(), mongoTemplate, event.getCollectionName()) );
+
+    }
+
+    @Override
+    public void onAfterDelete(AfterDeleteEvent<Object> event) {
+        int a = 1;
     }
 }

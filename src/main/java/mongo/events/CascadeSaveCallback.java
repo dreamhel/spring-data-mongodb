@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/12/30.
  */
-public class CascadeCallback implements ReflectionUtils.FieldCallback {
+public class CascadeSaveCallback implements ReflectionUtils.FieldCallback {
     private Object source;
     private MongoTemplate mongoTemplate;
 
-    public CascadeCallback(Object source, MongoTemplate mongoTemplate) {
+    public CascadeSaveCallback(Object source, MongoTemplate mongoTemplate) {
         super();
         this.source = source;
         this.mongoTemplate = mongoTemplate;
@@ -33,8 +33,7 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
         if (field.isAnnotationPresent(DBRef.class) && field.isAnnotationPresent(DBCascade.class)) {
             Class<?> sourceClass = field.get(source).getClass();
             Object fieldValue = field.get(source);
-            if (List.class.isAssignableFrom(sourceClass))  //arry references
-            {
+            if (List.class.isAssignableFrom(sourceClass)) {
                 for (Object obj : (List<?>) fieldValue) {
                     if (obj.getClass().isAnnotationPresent(Document.class)) {
                         mongoTemplate.save(obj);
@@ -42,7 +41,7 @@ public class CascadeCallback implements ReflectionUtils.FieldCallback {
                 }
 
             } else {
-                       mongoTemplate.save(field);
+                mongoTemplate.save(field);
             }
         }
     }

@@ -1,6 +1,7 @@
 package mongo.beans;
 
 
+import mongo.events.DBCascade;
 import mongo.events.RefrencesHolder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Reference;
@@ -14,12 +15,13 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/1/4.
  */
-@Document
+@Document(collection = "person")
 public class Person implements Reference {
     private String name;
     @Id
     private int age;
     @DBRef
+    @DBCascade
     private ArrayList<Reference> references;
 
     public void addRefrence(Reference reference)

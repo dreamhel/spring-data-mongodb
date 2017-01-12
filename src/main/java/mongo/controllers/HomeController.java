@@ -33,4 +33,13 @@ public class HomeController {
 
         personRepository.save(person);
     }
+    @RequestMapping(value = "person/{age}/{name}",method = RequestMethod.DELETE)
+    public  void delete(@PathVariable int age, @PathVariable String name){
+        Person person = new Person(name, age);
+        personRepository.delete(person);
+     //   personRepository.deleteAll();
+
+    }
+
+
 }
